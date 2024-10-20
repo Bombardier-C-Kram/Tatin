@@ -8,13 +8,20 @@
  :If IsJsonRequest request.Headers
      response←request ReturnJSON Reg.JSON data
  :Else
-     html←HtmlHeader''
-     html,←⊂'<h2>Version information and requirements</h2>'
-     html,←AddSpecialMessage ⍬
-     html,←⊂'<p>',data,'</p>'
-     html,←⊆GetFooter
-     html,←⊂'</body>'
-     html,←⊂'</html>'
+     pageTitle←'Tatin'
+     pageScripts←''
+     specialMessage←AddSpecialMessage ⍬
+     content←⎕THIS GenPage 'APLPages/version-information.aplp'
+     html←⊂⎕THIS GenPage 'APLPages/template.aplp'
+
+     ⍝html←HtmlHeader''
+     ⍝html,←⊂'<h2>Version information and requirements</h2>'
+     ⍝html,←
+     ⍝html,←⊂'<p>',data,'</p>'
+     ⍝html,←⊆GetFooter
+     ⍝html,←⊂⎕THIS GenPage 'APLPages/version-information.aplp'
+     ⍝html,←⊂'</body>'
+     ⍝html,←⊂'</html>'
      response←request ReturnHTML html
  :EndIf
 ⍝Done

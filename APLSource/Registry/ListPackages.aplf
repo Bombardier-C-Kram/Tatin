@@ -70,7 +70,7 @@
                  r←list,⊂⍬
              :EndIf
          :EndIf
-     :Else                                             ⍝ group, name and version, but the version mgith carry additional hyphens!
+     :Else                                             ⍝ group, name and version, but the version might carry additional hyphens!
          noOfDots←'.'+.=packageID
          :Select noOfDots
          :Case 0                                       ⍝ Just major

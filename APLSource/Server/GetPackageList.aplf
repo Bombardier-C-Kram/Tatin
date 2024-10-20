@@ -23,6 +23,7 @@
  parms.group←request R.GetQueryParameter'group'
  parms.tags←request R.GetQueryParameter'tags'
  parms.latest←⊃A.ToNum request R.GetQueryParameter'latest'
+ parms.info←⊃A.ToNum request R.GetQueryParameter'info'
  :If parms.latest
      parms.aggregate←0
      parms.date←0
@@ -48,10 +49,18 @@
  parms.dependencies←(,'1')≡,request R.GetQueryParameter'dependencies'
  parms←Reg.CheckParmsForListPackages parms
  :If IsJsonRequest request.Headers
-     :If 0=≢data←Reg.ListPackages(G.RegistryPath,'/',packageID)parms
-         response←Return404 request
+     :If parms.info
+         :If 0=≢data←1Reg.FetchAdditionalDataForListPackages¨G.RegistryPath∘,¨(Reg.GetAllPackages(G.RegistryPath,'/',packageID))
+           response←Return404 request
+         :Else
+           response←request ReturnJSON ⎕JSON ∊data
+         :EndIf
      :Else
-         response←request ReturnJSON Reg.JSON data
+        :If 0=≢data←Reg.ListPackages(G.RegistryPath,'/',packageID)parms
+          response←Return404 request
+        :Else
+          response←request ReturnJSON Reg.JSON data
+        :EndIf
      :EndIf
  :Else  ⍝ It's a request from a Browser
      parms.tags←1

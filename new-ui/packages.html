@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tatin Repository - Packages</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS v5.x -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Additional styles specific to the packages page -->
+    <style>
+        /* Packages Page Specific Styles */
+
+        /* Package Card */
+        .package-card {
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+            background-color: var(--bg-content-light);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+        }
+
+        .package-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .package-title {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .package-description {
+            color: var(--text-color-light);
+            margin-bottom: 10px;
+        }
+
+        .package-meta {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Updated Tag Styles */
+        .tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 0.35em 0.65em;
+            border-radius: 9999px;
+            text-decoration: none;
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        .tag i {
+            margin-right: 4px;
+        }
+
+        /* Tag Color Variants */
+        .tag-default {
+            background-color: #6c757d;
+        }
+        .tag-primary {
+            background-color: #0d6efd;
+        }
+        .tag-success {
+            background-color: #198754;
+        }
+        .tag-info {
+            background-color: #0dcaf0;
+            color: #212529;
+        }
+        .tag-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .tag-danger {
+            background-color: #dc3545;
+        }
+        .tag-light {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .tag-dark {
+            background-color: #212529;
+        }
+
+        /* Gradient Background for Featured Tags */
+        .tag-gradient {
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            color: #fff;
+        }
+
+        /* Hover Effects */
+        .tag:hover {
+            opacity: 0.8;
+        }
+
+        /* Pagination Styles */
+        .pagination .page-link {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .pagination .page-link:hover {
+            background-color: rgba(253, 115, 44, 0.1); /* Light shade of primary color */
+        }
+
+        /* Advanced Search Modal */
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #e06428; /* Slightly darker shade of primary color */
+            border-color: #e06428;
+        }
+
+        /* Adjustments for dark mode */
+        @media (prefers-color-scheme: dark) {
+            .package-card {
+                background-color: var(--bg-content-dark);
+                border: 1px solid rgba(255, 255, 255, 0.125);
+            }
+
+            .package-card:hover {
+                border-color: var(--secondary-color);
+            }
+
+            .package-title {
+                color: var(--secondary-color);
+            }
+
+            .package-description {
+                color: var(--text-color-dark);
+            }
+
+            .package-meta {
+                color: #aaa;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://tatin.dev/Assets/img/tatin.png" alt="Tatin Logo" class="navbar-logo">
+                <span class="ms-2">Tatin Registry</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Packages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Community</a>
+                    </li>
+                    <!-- User Profile Dropdown (Logged In) -->
+                    <!-- Uncomment when user is logged in -->
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://www.gravatar.com/avatar/your_gravatar_hash?d=mp&f=y" alt="Profile Image" class="profile-image">
+                            <span class="ms-1">John Doe</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li> -->
+                    <!-- Logged Out State -->
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="#" role="button">Sign Up</a>
+                    </li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>Discover Packages</h1>
+            <p>Browse and search for packages in the Tatin Registry.</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <!-- Search Section -->
+        <div class="container my-4">
+            <form class="row g-2" id="search-form">
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="search-input" placeholder="Search packages...">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
+                </div>
+                <div class="col-12 mt-2 text-end">
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#advancedSearchModal">
+                        Advanced Search <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Advanced Search Modal -->
+        <div class="modal fade" id="advancedSearchModal" tabindex="-1" aria-labelledby="advancedSearchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="advancedSearchModalLabel">Advanced Search</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="advanced-search-form">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="author-input" class="form-label"><i class="fas fa-user"></i> Author</label>
+                            <input type="text" class="form-control" id="author-input" placeholder="Author">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="group-input" class="form-label"><i class="fas fa-users"></i> Group</label>
+                            <input type="text" class="form-control" id="group-input" placeholder="Group">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="keywords-input" class="form-label"><i class="fas fa-key"></i> Keywords</label>
+                            <input type="text" class="form-control" id="keywords-input" placeholder="Keywords">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="license-input" class="form-label"><i class="fas fa-file-alt"></i> License</label>
+                            <select class="form-select" id="license-input">
+                                <option value="">Select</option>
+                                <option value="MIT">MIT</option>
+                                <option value="GPL">GPL</option>
+                                <option value="Apache">Apache</option>
+                                <!-- Add more licenses as needed -->
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="os-input" class="form-label"><i class="fas fa-desktop"></i> Operating System</label>
+                            <select class="form-select" id="os-input">
+                                <option value="">All</option>
+                                <option value="win">Windows</option>
+                                <option value="mac">Mac OS</option>
+                                <option value="lin">Linux</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="sort-input" class="form-label"><i class="fas fa-sort"></i> Sort By</label>
+                            <select class="form-select" id="sort-input">
+                                <option value="">Select</option>
+                                <option value="name">Name</option>
+                                <option value="author">Author</option>
+                                <option value="date">Date</option>
+                                <!-- Add more sort options as needed -->
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="apply-filters-button"><i class="fas fa-filter"></i> Apply Filters</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Package List Section -->
+        <div class="container">
+            <div class="row" id="package-list">
+                <!-- Packages will be dynamically inserted here -->
+            </div>
+            <!-- Pagination -->
+            <nav>
+                <ul class="pagination"></ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content from your template -->
+        <div class="container">
+            <div class="row">
+                <!-- Footer Logo and Description -->
+                <div class="col-md-4 mb-4">
+                    <img src="https://tatin.dev/Assets/img/tatin.png" alt="Tatin Logo" class="footer-logo">
+                    <p>Tatin is your go-to repository for Dyalog APL packages, fostering collaboration and innovation in the community.</p>
+                </div>
+                <!-- Quick Links -->
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#">Home</a>
+                        <a href="#">Packages</a>
+                        <a href="#">Documentation</a>
+                        <a href="#">Community</a>
+                    </div>
+                </div>
+                <!-- Resources -->
+                <div class="col-md-2 mb-4">
+                    <h5>Resources</h5>
+                    <div class="footer-links">
+                        <a href="#">Blog</a>
+                        <a href="#">Tutorials</a>
+                        <a href="#">Support</a>
+                        <a href="#">API Docs</a>
+                    </div>
+                </div>
+                <!-- Legal -->
+                <div class="col-md-2 mb-4">
+                    <h5>Legal</h5>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">License</a>
+                    </div>
+                </div>
+                <!-- Social Media -->
+                <div class="col-md-2 mb-4">
+                    <h5>Connect</h5>
+                    <div class="social-icons d-flex">
+                        <a href="https://twitter.com/tatin_dev"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="https://github.com/aplteam/tatin"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="https://apl.chat" target="_blank"><i class="fab fa-discord fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p class="mb-0">&copy; 2023 Tatin Package Registry. All rights reserved.</p>
+                <p>Created by Tatin version 0.115.0-beta-6+1984</p>
+                <p>Bugs, questions, problems: <a href="mailto:info@tatin.dev">info@tatin.dev</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+    <!-- Custom JS -->
+    <!--⋄ pageScripts ⋄-->
+    <script src="scripts.js"></script>
+    <script>
+let filteredPackages = [];
+const packagesPerPage = 10;
+let currentPage = 1;
+const tagInfo = {
+    'documentation': { class: 'tag-info', icon: 'fas fa-book', description: 'Related to documentation generation and management.' },
+    'security': { class: 'tag-danger', icon: 'fas fa-shield-alt', description: 'Security-related tools and utilities.' },
+    'utilities': { class: 'tag-success', icon: 'fas fa-toolbox', description: 'Utilities and helper tools.' },
+    'git': { class: 'tag-dark', icon: 'fab fa-git-alt', description: 'Git integration and tools.' },
+    'ai': { class: 'tag-warning', icon: 'fas fa-robot', description: 'Artificial Intelligence related packages.' },
+    'api': { class: 'tag-primary', icon: 'fas fa-code', description: 'APIs and integrations.' },
+    'jwt': { class: 'tag-gradient', icon: 'fas fa-key', description: 'JSON Web Token utilities.' },
+    'openai': { class: 'tag-primary', icon: 'fas fa-brain', description: 'Packages related to OpenAI integration.' },
+    // Add more mappings as needed
+};
+
+async function fetchPackages() {
+    try {
+        const response = await fetch('https://localhost/v1/packages?info=1', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        setupPackages(data);
+        displayPackages(currentPage);
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+}
+
+function setupPackages(data) {
+    // Convert API data to your existing package structure
+    filteredPackages = data.map(pkg => ({
+        name: pkg.name,
+        group: pkg.group,
+        description: pkg.desc,
+        versions: pkg.version,
+        author: pkg.group,  // Assuming author is the group for simplicity
+        date: new Date(pkg.date).toLocaleDateString(),
+        license: pkg.license,
+        tags: pkg.tags.split(','),
+        os: pkg.supports.split(',').map(s => s.trim().toLowerCase()),
+        projURL: pkg.projURL
+    }));
+}
+
+function getTagClass(tagName) {
+    const tag = tagName.toLowerCase();
+    return tagInfo[tag]?.class || 'tag-default';
+}
+
+function getTagIcon(tagName) {
+    const tag = tagName.toLowerCase();
+    return tagInfo[tag]?.icon || '';
+}
+
+function getTagDescription(tagName) {
+    const tag = tagName.toLowerCase();
+    return tagInfo[tag]?.description || '';
+}
+
+function displayPackages(page) {
+    const packageList = document.getElementById('package-list');
+    packageList.innerHTML = '';
+    page--;
+    const start = page * packagesPerPage;
+    const end = start + packagesPerPage;
+    const paginatedPackages = filteredPackages.slice(start, end);
+    if (paginatedPackages.length === 0) {
+        packageList.innerHTML = '<p class="text-center">No packages found.</p>';
+    } else {
+        paginatedPackages.forEach(pkg => {
+            const packageCol = document.createElement('div');
+            packageCol.className = 'col-md-6';
+            const packageCard = document.createElement('div');
+            packageCard.className = 'card package-card';
+            const tagElements = pkg.tags.map(tag => {
+                const tagClass = getTagClass(tag);
+                const tagIcon = getTagIcon(tag);
+                const tagDescription = getTagDescription(tag);
+                return `
+                    <span class="tag ${tagClass}" data-bs-toggle="tooltip" title="${tagDescription}">
+                        ${tagIcon ? `<i class="${tagIcon}"></i>` : ''}${tag}
+                    </span>
+                `;
+            }).join(' ');
+            packageCard.innerHTML = `
+                <div class="card-body">
+                    <h5 class="package-title">${pkg.group}-${pkg.name}</h5>
+                    <p class="package-description">${pkg.description}</p>
+                    <div class="mb-2">
+                        ${tagElements}
+                    </div>
+                    <p class="package-meta">
+                        <strong>Versions:</strong> ${pkg.versions} &nbsp; | &nbsp;
+                        <strong>Author:</strong> ${pkg.author} &nbsp; | &nbsp;
+                        <strong>Date:</strong> ${pkg.date}
+                    </p>
+                    <a href="${pkg.projURL}" target="_blank" class="btn btn-primary">View Package</a>
+                </div>
+            `;
+            packageCol.appendChild(packageCard);
+            packageList.appendChild(packageCol);
+        });
+    }
+    displayPagination();
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+}
+
+function displayPagination() {
+    const pagination = document.querySelector('.pagination');
+    pagination.innerHTML = '';
+    const pageCount = Math.ceil(filteredPackages.length / packagesPerPage);
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+    if (endPage - startPage < maxVisiblePages - 1) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    if (currentPage > 1) {
+        const prevLi = document.createElement('li');
+        prevLi.className = 'page-item';
+        prevLi.innerHTML = `<a class="page-link" href="#">Previous</a>`;
+        prevLi.addEventListener('click', function(e) {
+            e.preventDefault();
+            currentPage--;
+            displayPackages(currentPage);
+        });
+        pagination.appendChild(prevLi);
+    }
+    for (let i = startPage; i <= endPage; i++) {
+        const li = document.createElement('li');
+        li.className = 'page-item' + (i === currentPage ? ' active' : '');
+        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        li.addEventListener('click', function(e) {
+            e.preventDefault();
+            currentPage = i;
+            displayPackages(currentPage);
+        });
+        pagination.appendChild(li);
+    }
+    if (currentPage < pageCount) {
+        const nextLi = document.createElement('li');
+        nextLi.className = 'page-item';
+        nextLi.innerHTML = `<a class="page-link" href="#">Next</a>`;
+        nextLi.addEventListener('click', function(e) {
+            e.preventDefault();
+            currentPage++;
+            displayPackages(currentPage);
+        });
+        pagination.appendChild(nextLi);
+    }
+}
+
+const searchForm = document.getElementById('search-form');
+const applyFiltersButton = document.getElementById('apply-filters-button');
+
+searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    applyFilters();
+});
+
+applyFiltersButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    applyFilters();
+    const advancedSearchModal = bootstrap.Modal.getInstance(document.getElementById('advancedSearchModal'));
+    if (advancedSearchModal) {
+        advancedSearchModal.hide();
+    }
+});
+
+function applyFilters() {
+    const query = document.getElementById('search-input').value.trim().toLowerCase();
+    const authorQuery = document.getElementById('author-input').value.trim().toLowerCase();
+    const groupQuery = document.getElementById('group-input').value.trim().toLowerCase();
+    const keywordsQuery = document.getElementById('keywords-input').value.trim().toLowerCase();
+    const licenseQuery = document.getElementById('license-input').value;
+    const osQuery = document.getElementById('os-input').value;
+    const sortBy = document.getElementById('sort-input').value;
+
+    filteredPackages = packages.filter(pkg => {
+        const matchesQuery = pkg.name.toLowerCase().includes(query) || pkg.description.toLowerCase().includes(query);
+        const matchesAuthor = !authorQuery || pkg.author.toLowerCase().includes(authorQuery);
+        const matchesGroup = !groupQuery || pkg.group.toLowerCase().includes(groupQuery);
+        const matchesKeywords = !keywordsQuery || pkg.tags.some(tag => tag.toLowerCase().includes(keywordsQuery));
+        const matchesLicense = !licenseQuery || pkg.license === licenseQuery;
+        const matchesOS = !osQuery || pkg.os.includes(osQuery);
+        return matchesQuery && matchesAuthor && matchesGroup && matchesKeywords && matchesLicense && matchesOS;
+    });
+
+    if (sortBy) {
+        filteredPackages.sort((a, b) => {
+            if (sortBy === 'date') {
+                return new Date(b.date) - new Date(a.date);
+            } else {
+                return a[sortBy].localeCompare(b[sortBy]);
+            }
+        });
+    }
+
+    currentPage = 1;
+    displayPackages(currentPage);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchPackages();  // Fetch data on load
+});
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-r←FetchAdditionalDataForListPackages path;cfg;OSes;f
+r←{flag} FetchAdditionalDataForListPackages path;cfg;OSes;f;rns
+ flag←{0::0⋄flag}⍬
  cfg←ReadPackageConfigFile path
  OSes←⊃{0=≢⍵:'' ⋄ {⍺,', ',⍵}/⍵}cfg.(os_lin os_mac os_win)/'Lin' 'Mac' 'Win'
  :If 0=cfg.⎕NC'project_url'             ⍝ Was introduced after packages were already published
@@ -11,4 +12,15 @@ r←FetchAdditionalDataForListPackages path;cfg;OSes;f
  :EndIf
  r,←⊂f/'Yes'                            ⍝ Mark as a user command
  r,←⊂cfg.tags
+ :If flag
+    r,←⊂cfg.date
+    r,←⊂cfg.name
+    r,←⊂cfg.group
+    r,←⊂cfg.license
+    r,←⊂cfg.version
+    rns←⎕ns''
+    rns.(desc projURL supports UC tags date name group license version)←r
+    r←rns
+ :EndIf
+
 ⍝Done

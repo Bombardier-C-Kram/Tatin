@@ -1,0 +1,103 @@
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <h1>Discover Packages</h1>
+        <p>Browse and search for packages in the Tatin Registry.</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <!-- Search Section -->
+<div class="container my-4">
+    <form class="row g-2" id="search-form">
+        <div class="col-md-9">
+            <input type="text" class="form-control" id="search-input" placeholder="Search packages...">
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-secondary w-100" id="reset-button"><i class="fas fa-redo"></i> Reset</button>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-link w-100" data-bs-toggle="modal" data-bs-target="#advancedSearchModal">
+                Advanced <i class="fas fa-filter"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+    <!-- Advanced Search Modal -->
+    <div class="modal fade" id="advancedSearchModal" tabindex="-1" aria-labelledby="advancedSearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="advancedSearchModalLabel">Advanced Search</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="advanced-search-form">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="author-input" class="form-label"><i class="fas fa-user"></i> Author</label>
+                        <input type="text" class="form-control" id="author-input" placeholder="Author">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="group-input" class="form-label"><i class="fas fa-users"></i> Group</label>
+                        <input type="text" class="form-control" id="group-input" placeholder="Group">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="keywords-input" class="form-label"><i class="fas fa-key"></i> Keywords</label>
+                        <input type="text" class="form-control" id="keywords-input" placeholder="Keywords">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="license-input" class="form-label"><i class="fas fa-file-alt"></i> License</label>
+                        <select class="form-select" id="license-input">
+                            <option value="">Select</option>
+                            <option value="MIT">MIT</option>
+                            <option value="GPL">GPL</option>
+                            <option value="Apache">Apache</option>
+                            <!-- Add more licenses as needed -->
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="os-input" class="form-label"><i class="fas fa-desktop"></i> Operating System</label>
+                        <select class="form-select" id="os-input">
+                            <option value="">All</option>
+                            <option value="win">Windows</option>
+                            <option value="mac">Mac OS</option>
+                            <option value="lin">Linux</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="sort-input" class="form-label"><i class="fas fa-sort"></i> Sort By</label>
+                        <select class="form-select" id="sort-input">
+                            <option value="">Select</option>
+                            <option value="name">Name</option>
+                            <option value="author">Author</option>
+                            <option value="date">Date</option>
+                            <!-- Add more sort options as needed -->
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="apply-filters-button"><i class="fas fa-filter"></i> Apply Filters</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Package List Section -->
+    <div class="container">
+        <div class="row" id="package-list">
+            <!-- Packages will be dynamically inserted here -->
+        </div>
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>

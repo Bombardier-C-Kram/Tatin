@@ -44,7 +44,10 @@
  :If 0=parms.⎕NC'dependencies'
      parms.dependencies←0
  :EndIf
- list←'group' 'latest' 'tags' 'aggregate' 'date' 'project_url' 'since' 'os_win' 'os_mac' 'os_lin' 'userCommand' 'dependencies'
+  :If 0=parms.⎕NC'info'
+     parms.info←0
+ :EndIf
+ list←'info' 'group' 'latest' 'tags' 'aggregate' 'date' 'project_url' 'since' 'os_win' 'os_mac' 'os_lin' 'userCommand' 'dependencies'
  msg←'Invalid left argument: only "group", "latest", "tags", "date", "project_url", "aggregate", "dependencies", "os_win", "os_mac" and "os_lin" are permitted'
  msg Assert∧/(' '~¨⍨↓parms.⎕NL 2)∊list
  '"aggregate" must be a Boolean'Assert parms.aggregate∊0 1

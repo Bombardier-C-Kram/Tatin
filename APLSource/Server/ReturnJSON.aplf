@@ -5,4 +5,5 @@
  response.StatusCode←200
  response.Content←json
  response.Headers,←⊂'X-Robots-Tag' 'noindex'
+ response.Headers,←⊂'Access-Control-Allow-Origin' '*'
 ⍝Done

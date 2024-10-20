@@ -1,0 +1,150 @@
+/* Packages Page Specific Styles */
+
+/* Package Card */
+.package-card {
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+    background-color: var(--bg-content-light);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.package-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.package-title {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.package-description {
+    color: var(--text-color-light);
+    margin-bottom: 10px;
+}
+
+.package-meta {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Updated Tag Styles */
+.tag {
+    display: inline-block;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 0.35em 0.65em;
+    border-radius: 9999px;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.tag i {
+    margin-right: 4px;
+}
+
+/* Tag Color Variants */
+.tag-default {
+    background-color: #6c757d;
+}
+.tag-primary {
+    background-color: #0d6efd;
+}
+.tag-success {
+    background-color: #198754;
+}
+.tag-info {
+    background-color: #0dcaf0;
+    color: #212529;
+}
+.tag-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+.tag-danger {
+    background-color: #dc3545;
+}
+.tag-light {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+.tag-dark {
+    background-color: #212529;
+}
+
+/* Gradient Background for Featured Tags */
+.tag-gradient {
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+}
+
+/* Hover Effects */
+.tag:hover {
+    opacity: 0.8;
+}
+
+/* Pagination Styles */
+.pagination .page-link {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.pagination .page-link:hover {
+    background-color: rgba(253, 115, 44, 0.1); /* Light shade of primary color */
+}
+
+/* Advanced Search Modal */
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #e06428; /* Slightly darker shade of primary color */
+    border-color: #e06428;
+}
+
+/* Adjustments for dark mode */
+@media (prefers-color-scheme: dark) {
+    .package-card {
+        background-color: var(--bg-content-dark);
+        border: 1px solid rgba(255, 255, 255, 0.125);
+    }
+
+    .package-card:hover {
+        border-color: var(--secondary-color);
+    }
+
+    .package-title {
+        color: var(--secondary-color);
+    }
+
+    .package-description {
+        color: var(--text-color-dark);
+    }
+
+    .package-meta {
+        color: #aaa;
+    }
+}
